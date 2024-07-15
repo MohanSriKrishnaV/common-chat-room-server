@@ -5,7 +5,9 @@ import { v4 as uuidv4 } from 'uuid'; // Import UUID generator
 
 export type MessageDocument = Message & Document;
 
-@Schema()
+
+
+@Schema({ collection: 'common-chat-room' })
 export class Message {
     // @Prop({ required: true })
     // message: string;
