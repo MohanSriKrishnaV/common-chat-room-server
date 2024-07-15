@@ -10,7 +10,7 @@ import { multerConfig } from './multer/muler.config';
 @Module({
   providers: [ChatsGateway, ChatsService],
   controllers: [UtilityController],
-  imports: [MulterModule.register(multerConfig), MongooseModule.forRoot('mongodb+srv://icss4502024:6PfQUf2WNYantaY0@cluster0.akxj6yc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'),
+  imports: [MulterModule.register(multerConfig), MongooseModule.forRoot('mongodb+srv://icss4502024:k1HEVxdxG8ravXmg@cluster0.cshahqt.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'),
   MongooseModule.forFeature([{ name: 'Message', schema: MessageSchema }]),]
 })
 export class ChatsModule { }
