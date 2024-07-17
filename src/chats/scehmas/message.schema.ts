@@ -13,6 +13,12 @@ export class Message {
     // message: string;
     // @Prop({ required: true, default: '' })
     // message: string;
+
+
+    @Prop({ required: true })
+    roomId: string; // Add roomId field
+
+
     @Prop()
     message: string;
 
@@ -43,6 +49,10 @@ export class Message {
 
     @Prop({ default: uuidv4 }) // Default value using UUID generator
     id: string; // Add id field with UUID
+
+
+
+
 }
 
 export const MessageSchema = SchemaFactory.createForClass(Message);

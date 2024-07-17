@@ -8,11 +8,12 @@ import { extname } from 'path';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Message, MessageDocument } from './scehmas/message.schema';
+import { ChatRoom, ChatRoomDocument } from './scehmas/room.schema';
 
 
 @Injectable()
 export class ChatsService {
-  constructor(@InjectModel(Message.name) private messageModel: Model<MessageDocument>) {
+  constructor(@InjectModel(ChatRoom.name) private chatRoomModel: Model<ChatRoomDocument>, @InjectModel(Message.name) private messageModel: Model<MessageDocument>) {
 
   }
   create(createChatDto: CreateChatDto) {
@@ -53,4 +54,31 @@ export class ChatsService {
     }
   }
 
+
+  async createChatRoom(roomId: string, password: string): Promise<ChatRoom> {
+    const createdRoom = new this.chatRoomModel({ roomId, password });
+    return createdRoom.save();
+  }
+
+  async findRoomById(roomId: string): Promise<ChatRoom | null> {
+    return this.chatRoomModel.findOne({ roomId }).exec();
+  }
+
+  async generateUniqueRoomId(): Promise<string> {
+    let roomId = uuidv4(); // Generate UUID
+    // Check if the roomId is already taken (not shown in this example)
+    return roomId;
+  }
+
+  async findChatRoomById(roomId: string): Promise<ChatRoom | null> {
+    return this.chatRoomModel.findOne({ roomId }).exec();
+  }
+
+  async validatePassword(roomId: string, password: string): Promise<boolean> {
+    const room = await this.chatRoomModel.findOne({ roomId }).exec();
+    return room ? room.password === password : false;
+  }
+  async findMessagesByRoomId(roomId: string): Promise<Message[]> {
+    return this.messageModel.find({ roomId }).exec();
+  }
 }
